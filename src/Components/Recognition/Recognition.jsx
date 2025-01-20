@@ -1,4 +1,3 @@
-import {useState} from "react";
 import getCitiesData from "../../service/city-api-service";
 import getWeatherData from "../../service/weather-api-service";
 
@@ -51,10 +50,10 @@ function Recognition() {
         return statQuery;
     }
 
-    function detectCapitalizedWords(text, minLength) {
+    /*function detectCapitalizedWords(text, minLength) {
         const isCapitalized = new RegExp(`\\b[A-Z][a-z]{${minLength - 1},}\\b`, 'g');
         return text.match(isCapitalized);
-    }
+    }*/
 
     async function SelectService(obj, text){
 
