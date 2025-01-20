@@ -7,4 +7,11 @@ export class ContactAPIService {
         const response = await axios.get(`${BASE_URL}contacts/`);
         return response;
     }
+
+    static async addContact(contact) {
+        const response = await axios.post(`${BASE_URL}contacts/`, contact);
+        return response;
+    }
+
+
 }
