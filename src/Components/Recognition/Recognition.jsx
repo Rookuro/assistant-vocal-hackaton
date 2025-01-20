@@ -47,8 +47,28 @@ function Recognition() {
                 statQuery.keySong.push(word);
             }
         })
+
         return statQuery;
     }
+
+    function SelectService(obj){
+
+        let lenghtOfKeyWeather = obj.keyWeather.length;
+        let lenghtOfKeySong = obj.keySong.length;
+        let lenghtOfKeyMail = obj.keyMail.length;
+
+        if(lenghtOfKeyWeather > lenghtOfKeySong && lenghtOfKeyWeather > lenghtOfKeyMail) {
+            console.log("Service Weather");
+        } else if (lenghtOfKeySong > lenghtOfKeyWeather && lenghtOfKeySong > lenghtOfKeyMail){
+            console.log("Service Song");
+        } else if (lenghtOfKeyMail > lenghtOfKeyWeather && lenghtOfKeyMail > lenghtOfKeySong) {
+            console.log("Service Mail");
+        } else {
+            Speak("Veuillez reformuler votre demande s'il vous plaît");
+        }
+    }
+
+
 
     function RecognitionFunc() {
             recognition.start()
@@ -56,6 +76,7 @@ function Recognition() {
                 if (event.results[0][0].confidence > 0.7){
                     let query = event.results[0][0].transcript;
                     let confidence = Score(query);
+                    SelectService(confidence);
                     console.log(confidence);
                     console.log(query);
                 }else{
