@@ -1,0 +1,77 @@
+import {useState} from "react";
+
+
+function Recognition() {
+
+    let SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition
+    let SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList
+
+
+    let recognition = new SpeechRecognition()
+    let recognitionList = new SpeechGrammarList()
+    recognition.grammars = recognitionList
+    recognition.lang = 'fr-FR'
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    const synth = window.speechSynthesis;
+
+    const triggerWeather = ["temps", "demain", "hier", "meteo", "matin", "après-midi", "prévision", "température"];
+    const triggerMail = ["musique", "jouer", "spotify", "lancer", "llaylist", "album"];
+    const triggerSong = ["mail", "ecrire", "envoyer", "rediger"];
+
+    function Speak(text){
+        synth.speak(new SpeechSynthesisUtterance(text));
+        console.log("Voici le message");
+    }
+
+    function Score(str) {
+        let statQuery = {
+            keyWeather: [],
+            keyMail : [],
+            keySong : [],
+        }
+        let listWords = str.split(" ");
+        listWords.forEach(word => {
+            word = word.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if(triggerMail.includes(word)) {
+                statQuery.keyMail.push(word);
+            }
+
+            if (triggerWeather.includes(word)) {
+                statQuery.keyWeather.push(word);
+            }
+
+            if (triggerSong.includes(word)) {
+                statQuery.keySong.push(word);
+            }
+        })
+        return statQuery;
+    }
+
+    function RecognitionFunc() {
+            recognition.start()
+            recognition.onresult = (event) => {
+                if (event.results[0][0].confidence > 0.7){
+                    let query = event.results[0][0].transcript;
+                    let confidence = Score(query);
+                    console.log(confidence);
+                    console.log(query);
+                }else{
+                    console.log("Veuillez reformuler votre demande s'il vous plaît");
+                    Speak("Veuillez reformuler votre demande s'il vous plaît");
+                }
+            }
+    }
+    return (
+        <div className="App">
+            <button onClick={RecognitionFunc}>Appuie pour parler</button>
+            <button onClick={() => {
+                Speak("Veuillez reformuler votre demande s'il vous plaît");
+            }}>Avoir une réponse</button>
+        </div>
+    );
+}
+
+export default Recognition;
