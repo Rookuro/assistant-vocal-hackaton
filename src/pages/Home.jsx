@@ -1,6 +1,6 @@
 'use client'
 
-import Recognition from "../Components/Recognition"
+import Recognition from "../Components/Recognition/Recognition"
 
 const navigation = [
   { name: 'Accueil', href: '/' },

@@ -1,8 +1,8 @@
-import getCitiesData, {initialIsCapital} from "../service/city-api-service";
-import getSpotifyMusic from "../service/spotify-api-service";
-import getWeatherData from "../service/weather-api-service";
-import {ContactAPIService} from "../service/user-api-service";
-import {MailApiService} from "../service/mail-api-service";
+import getCitiesData, {initialIsCapital} from "../../service/city-api-service";
+import getSpotifyMusic from "../../service/spotify-api-service";
+import getWeatherData from "../../service/weather-api-service";
+import {ContactAPIService} from "../../service/user-api-service";
+import {MailApiService} from "../../service/mail-api-service";
 
 import {useState} from "react";
 

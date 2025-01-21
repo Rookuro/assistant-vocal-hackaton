@@ -1,7 +1,7 @@
 'use client'
 
-import { ContactList } from "../Components/ContactList/ContactList"
-import { NewContactForm } from "../Components/NewContactForm"
+import { ContactList } from "./../Components/ContactList/ContactList"
+import { NewContactForm } from "./../Components/NewContactForm/NewContactForm"
 
 const navigation = [
   { name: 'Accueil', href: '/' },
