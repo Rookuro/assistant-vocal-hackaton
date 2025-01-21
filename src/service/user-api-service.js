@@ -13,5 +13,9 @@ export class ContactAPIService {
         return response;
     }
 
+    static async FetchConctactByName(name) {
+        const response = await axios.get(`${BASE_URL}contacts/${name}`);
+        return response;
+    }
 
 }

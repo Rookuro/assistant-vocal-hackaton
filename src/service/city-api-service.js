@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function initialIsCapital( word ){
+export function initialIsCapital( word ){
     return word[0] !== word[0].toLowerCase();
 }
 
