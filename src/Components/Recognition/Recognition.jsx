@@ -1,4 +1,5 @@
 import getCitiesData from "../../service/city-api-service";
+import getSpotifyMusic from "../../service/spotify-api-service";
 import getWeatherData from "../../service/weather-api-service";
 
 function Recognition() {
@@ -18,8 +19,8 @@ function Recognition() {
     const synth = window.speechSynthesis;
 
     const triggerWeather = ["temps", "demain", "hier", "meteo", "matin", "après-midi", "prévision", "température"];
-    const triggerMail = ["musique", "jouer", "spotify", "lancer", "llaylist", "album"];
-    const triggerSong = ["mail", "ecrire", "envoyer", "rediger"];
+    const triggerSong = ["musique", "jouer", "spotify", "lancer", "playlist", "album"];
+    const triggerMail = ["mail", "ecrire", "envoyer", "rediger"];
 
     function Speak(text){
         synth.speak(new SpeechSynthesisUtterance(text));
@@ -50,12 +51,7 @@ function Recognition() {
         return statQuery;
     }
 
-    /*function detectCapitalizedWords(text, minLength) {
-        const isCapitalized = new RegExp(`\\b[A-Z][a-z]{${minLength - 1},}\\b`, 'g');
-        return text.match(isCapitalized);
-    }*/
-
-    async function SelectService(obj, text){
+    async function SelectService(obj, query){
 
         let lenghtOfKeyWeather = obj.keyWeather.length;
         let lenghtOfKeySong = obj.keySong.length;
@@ -63,11 +59,16 @@ function Recognition() {
 
         if(lenghtOfKeyWeather > lenghtOfKeySong && lenghtOfKeyWeather > lenghtOfKeyMail) {
             console.log("Service Weather");
-           let res = await getCitiesData(text);
+           let res = await getCitiesData(query);
            let weather = await getWeatherData(res);
            Speak(`Il fait ${weather.temperature} degrès à ${weather.name} et il fait ${weather.weather}` );
         } else if (lenghtOfKeySong > lenghtOfKeyWeather && lenghtOfKeySong > lenghtOfKeyMail){
             console.log("Service Song");
+            let res = await getSpotifyMusic(query);
+            if (res != null) {
+                // open external_url in new tab
+                window.open(res.external_urls.spotify, '_blank');
+            }
         } else if (lenghtOfKeyMail > lenghtOfKeyWeather && lenghtOfKeyMail > lenghtOfKeySong) {
             console.log("Service Mail");
         } else {
